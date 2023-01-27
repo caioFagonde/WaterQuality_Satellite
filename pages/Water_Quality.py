@@ -213,6 +213,7 @@ cont = 1
 
 DO = []
 DEPTH = []
+SECCHI = []
 B2 = []
 B4 = []
 B6 = []
@@ -244,33 +245,112 @@ for i in range(0,len(np.array(onlyfiles))):
         # get value from grid
         value = list(src.sample([(xx, yy)]))[0]
         if k == 0:
-            DO.append(df.loc[index,'B_avg'])
-            DEPTH.append(df.loc[index,'Profundidade de Secchi (m)'])
+            DO.append(df.loc[index,'BA1'])
+            DEPTH.append(0.3)
+            SECCHI.append(df.loc[index,'Profundidade de Secchi (m)'])
+            B2.append(value[1])
+            B4.append(value[3])
+            B6.append(value[5])
+            B8.append(value[7])
+            DO.append(df.loc[index,'BA2'])
+            DEPTH.append(1.5)
+            SECCHI.append(df.loc[index,'Profundidade de Secchi (m)'])
+            B2.append(value[1])
+            B4.append(value[3])
+            B6.append(value[5])
+            B8.append(value[7])
+            DO.append(df.loc[index,'BA3'])
+            DEPTH.append(3.8)
+            SECCHI.append(df.loc[index,'Profundidade de Secchi (m)'])
+            B2.append(value[1])
+            B4.append(value[3])
+            B6.append(value[5])
+            B8.append(value[7])
         elif k == 1:
-            DO.append(df.loc[index,'S_avg'])
-            DEPTH.append(df.loc[index,'METROS.1'])
+            DO.append(df.loc[index,'SA1'])
+            DEPTH.append(0.3)
+            SECCHI.append(df.loc[index,'METROS.1'])
+            B2.append(value[1])
+            B4.append(value[3])
+            B6.append(value[5])
+            B8.append(value[7])
+            DO.append(df.loc[index,'SA2'])
+            DEPTH.append(1.5)
+            SECCHI.append(df.loc[index,'METROS.1'])
+            B2.append(value[1])
+            B4.append(value[3])
+            B6.append(value[5])
+            B8.append(value[7])
+            DO.append(df.loc[index,'SA3'])
+            DEPTH.append(3.8)
+            SECCHI.append(df.loc[index,'METROS.1'])
+            B2.append(value[1])
+            B4.append(value[3])
+            B6.append(value[5])
+            B8.append(value[7])
         elif k == 2:
-            DO.append(df.loc[index,'P_avg'])
-            DEPTH.append(df.loc[index,'METROS'])
+            DO.append(df.loc[index,'PA1'])
+            DEPTH.append(0.3)
+            SECCHI.append(df.loc[index,'METROS'])
+            B2.append(value[1])
+            B4.append(value[3])
+            B6.append(value[5])
+            B8.append(value[7])
+            DO.append(df.loc[index,'PA2'])
+            DEPTH.append(1.5)
+            SECCHI.append(df.loc[index,'METROS'])
+            B2.append(value[1])
+            B4.append(value[3])
+            B6.append(value[5])
+            B8.append(value[7])
+            DO.append(df.loc[index,'PA3'])
+            DEPTH.append(3.8)
+            SECCHI.append(df.loc[index,'METROS'])
+            B2.append(value[1])
+            B4.append(value[3])
+            B6.append(value[5])
+            B8.append(value[7])
         elif k == 3:
-            DO.append(df.loc[index,'Z_avg'])
-            DEPTH.append(df.loc[index,'METROS.2'])
-        B2.append(value[1])
-        B4.append(value[3])
-        B6.append(value[5])
-        B8.append(value[7])
+            DO.append(df.loc[index,'ZA1'])
+            DEPTH.append(0.3)
+            SECCHI.append(df.loc[index,'METROS.2'])
+            B2.append(value[1])
+            B4.append(value[3])
+            B6.append(value[5])
+            B8.append(value[7])
+            DO.append(df.loc[index,'ZA2'])
+            DEPTH.append(1.5)
+            SECCHI.append(df.loc[index,'METROS.2'])
+            B2.append(value[1])
+            B4.append(value[3])
+            B6.append(value[5])
+            B8.append(value[7])
+            DO.append(df.loc[index,'ZA3'])
+            DEPTH.append(3.8)
+            SECCHI.append(df.loc[index,'METROS.2'])
+            B2.append(value[1])
+            B4.append(value[3])
+            B6.append(value[5])
+            B8.append(value[7])
         
-d = {'DO':DO,'depth': DEPTH, 'b2': B2,'b4': B4,'b6':B6,'b8':B8}
+        
+d = {'DO':DO,'depth': DEPTH, 'b2': B2,'b4': B4,'b6':B6,'b8':B8, 'secchi': SECCHI}
 df2 = pandas.DataFrame(data=d)
 
-X = df2[['depth','b2','b4','b6','b8']]
+X = df2[['depth','b2','b4','b6','b8','secchi']]
+X_secchi = df2[['b2','b4','b6','b8']]
 y = df2[['DO']]
+y_secchi = df2[['secchi']]
 
 from sklearn import linear_model
 
 regr = linear_model.LinearRegression()
 regr.fit(X, y)
 coefficients = pandas.concat([pandas.DataFrame(X.columns),pandas.DataFrame(np.transpose(regr.coef_))], axis = 1)
+
+regr_secc = linear_model.LinearRegression()
+regr_secc.fit(X, y)
+coefficients_secc = pandas.concat([pandas.DataFrame(X.columns),pandas.DataFrame(np.transpose(regr.coef_))], axis = 1)
 
 import statsmodels.api as sm
 X1 = sm.add_constant(X)
@@ -311,7 +391,8 @@ def generate_tif(depth = 4, filename = ""):
     np.seterr(divide='ignore', invalid='ignore')
     
     # Calculate Dissolved Oxygen from regression equation
-    dissolved_oxygen = regr.intercept_[0] + coefficients.iat[0,1]*depth + coefficients.iat[1,1] *band_blue.astype(float) + coefficients.iat[2,1]*band_green.astype(float) + coefficients.iat[3,1]*band_red.astype(float) + coefficients.iat[4,1]*band_nir.astype(float)
+    secc = regr_secc.intercept_[0] + coefficients_secc.iat[0,1] *band_blue.astype(float) + coefficients_secc.iat[1,1]*band_green.astype(float) + coefficients_secc.iat[2,1]*band_red.astype(float) + coefficients_secc.iat[3,1]*band_nir.astype(float)
+    dissolved_oxygen = regr.intercept_[0] + coefficients.iat[0,1]*depth + coefficients.iat[1,1] *band_blue.astype(float) + coefficients.iat[2,1]*band_green.astype(float) + coefficients.iat[3,1]*band_red.astype(float) + coefficients.iat[4,1]*band_nir.astype(float) + coefficients.iat[5,1]*secc.astype(float)
     dissolved_oxygen[dissolved_oxygen < 0] = 0
     dissolved_oxygen[dissolved_oxygen > 20] = 20
     
