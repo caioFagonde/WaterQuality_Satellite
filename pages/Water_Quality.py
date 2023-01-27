@@ -270,7 +270,7 @@ for i in range(0,len(np.array(onlyfiles))):
                 B6.append(value[5])
                 B8.append(value[7])
         elif k == 1:
-            if ~np.isnan(df.loc[index,'6X61']):
+            if ~np.isnan(df.loc[index,'6x61']):
                 DO.append(df.loc[index,'6x61'])
                 DEPTH.append(0.3)
                 SECCHI.append(df.loc[index,'METROS.1'])
@@ -278,7 +278,7 @@ for i in range(0,len(np.array(onlyfiles))):
                 B4.append(value[3])
                 B6.append(value[5])
                 B8.append(value[7])
-            if ~np.isnan(df.loc[index,'6X62']):
+            if ~np.isnan(df.loc[index,'6x62']):
                 DO.append(df.loc[index,'6x62'])
                 DEPTH.append(1.5)
                 SECCHI.append(df.loc[index,'METROS.1'])
@@ -286,7 +286,7 @@ for i in range(0,len(np.array(onlyfiles))):
                 B4.append(value[3])
                 B6.append(value[5])
                 B8.append(value[7])
-            if ~np.isnan(df.loc[index,'6X63']):
+            if ~np.isnan(df.loc[index,'6x63']):
                 DO.append(df.loc[index,'6x63'])
                 DEPTH.append(3.8)
                 SECCHI.append(df.loc[index,'METROS.1'])
