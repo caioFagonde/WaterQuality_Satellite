@@ -32,6 +32,7 @@ st.sidebar.info(
 def ee_authenticate(token_name="EARTHENGINE_TOKEN"):
     geemap.ee_initialize(token_name=token_name)
 
+ee.Authenticate(authorization_code=EARTHENGINE_TOKEN)
 ee.Initialize()
 Map = geemap.Map(center=[40,-100], zoom=4)
 Map
