@@ -396,9 +396,17 @@ def generate_tif(depth = 4, filename = ""):
     dissolved_oxygen[dissolved_oxygen < 0] = 0
     dissolved_oxygen[dissolved_oxygen > 20] = 20
     
+    # bathymetry
+    a0 = - 3.24
+    a1 = 14.72
+    a2 = -18.48
+    bathymetry = a0 + a1*band_blue.astype(float) + a2*band_green.astype(float)
+    
+    
     # NDWI for masking
     ndwi = (band_green.astype(float) - band_nir.astype(float))/(band_green.astype(float) + band_nir.astype(float))
     dissolved_oxygen[ndwi < -0.4] = np.nan
+    bathymetry[ndwi < -0.4] = np.nan
     # check range values, excluding NaN
     #np.nanmin(dissolved_oxygen), np.nanmax(dissolved_oxygen)
     #np.nanmin(dissolved_oxygen), np.nanmax(dissolved_oxygen)
@@ -412,6 +420,8 @@ def generate_tif(depth = 4, filename = ""):
     # Write band calculations to a new raster file
     with rasterio.open('dissolved_oxygen.tif', 'w', **kwargs) as dst:
         dst.write_band(1, dissolved_oxygen.astype(rasterio.float32))
+    with rasterio.open('bathymetry.tif', 'w', **kwargs) as dst:
+        dst.write_band(1, bathymetry.astype(rasterio.float32))
     
     
     # In[96]:
@@ -483,6 +493,47 @@ def generate_tif(depth = 4, filename = ""):
     cbar = fig.colorbar(cax, orientation='vertical', shrink=0.65)
     
     fig.savefig("do_legends.png", dpi=400, bbox_inches='tight', pad_inches=0.3)
+    
+    min= np.nanmin(bathymetry)
+    max= np.nanmax(bathymetry)
+    mid= (max + min)/2
+    
+    fig = plt.figure(figsize=(20,10))
+    ax = fig.add_subplot(111)
+    
+    # diverging color scheme chosen from https://matplotlib.org/users/colormaps.html
+    cmap = 'Set1'# plt.cm.RdYlGn 
+    
+    cax = ax.imshow(dissolved_oxygen, cmap=cmap, clim=(min, max), norm=MidpointNormalize(midpoint=mid,vmin=min, vmax=max))
+    
+    ax.axis('off')
+    title = "Profundidade máxima (m)"
+    #ax.set_title(title, fontsize=18, fontweight='bold')
+    
+    #cbar = fig.colorbar(cax, orientation='vertical', shrink=0.65)
+    
+    #fig.savefig("do.png", dpi=400, bbox_inches='tight', pad_inches=0.3)
+    fig.savefig("depth.png", dpi=400, bbox_inches='tight', pad_inches=0, transparent=True)
+    
+    # Set min/max values from range for image (excluding NAN)
+    # set midpoint according to how NDVI is interpreted: https://earthobservatory.nasa.gov/Features/MeasuringVegetation/
+    
+    
+    fig = plt.figure(figsize=(20,10))
+    ax = fig.add_subplot(111)
+    
+    # diverging color scheme chosen from https://matplotlib.org/users/colormaps.html
+    cmap = 'Set1'# plt.cm.RdYlGn 
+    
+    cax = ax.imshow(dissolved_oxygen, cmap=cmap, clim=(min, max), norm=MidpointNormalize(midpoint=mid,vmin=min, vmax=max))
+    
+    ax.axis('off')
+    title = "Profundidade máxima (m)"
+    ax.set_title(title, fontsize=18, fontweight='bold')
+    
+    cbar = fig.colorbar(cax, orientation='vertical', shrink=0.65)
+    
+    fig.savefig("depth_legends.png", dpi=400, bbox_inches='tight', pad_inches=0.3)
     
     st.pyplot(fig)
     ## LC08 RGB Image
@@ -557,7 +608,9 @@ def generate_tif(depth = 4, filename = ""):
 
     # Overlay raster (RGB) called img using add_child() function (opacity and bounding box set)
     m.add_child(folium.raster_layers.ImageOverlay("do.png", opacity=.8, 
-                                     bounds = bounds_fin, transparent = True))
+                                     bounds = bounds_fin, transparent = True,name = "Dissolved Oxygen"))
+    m.add_child(folium.raster_layers.ImageOverlay("depth.png", opacity=.8, 
+                                     bounds = bounds_fin, transparent = True, name = "Bathymetry"))
 
     folium.TileLayer('Stamen Terrain', transparent = True).add_to(m)
     folium.TileLayer('openstreetmap', transparant = True).add_to(m)
