@@ -6,7 +6,7 @@ Created on Fri Jan 27 04:47:14 2023
 """
 
 import os
-import leafmap.foliumap as leafmap
+import leafmap
 import leafmap.colormaps as cm
 import streamlit as st
 import geemap
@@ -434,7 +434,7 @@ def generate_tif(depth = 4, filename = ""):
     image = 'dissolved_oxygen.tif'
     os.environ['LOCALTILESERVER_CLIENT_PREFIX'] = 'proxy/{port}'
     m = leafmap.Map(latlon_control=False)
-    m.add_raster(image, band = 1, layer_name = "Dissolved Oxygen", projection = "EPSG:4326")
+    leafmap.plot_raster(image, cmap='terrain', figsize=(15, 10))
     m.to_streamlit()
     
     
