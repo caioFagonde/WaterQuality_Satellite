@@ -17,6 +17,8 @@ import datetime
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.colors as colors
+import ipyleaflet
+from ipyleaflet import Map, basemaps
 
 from os import listdir
 from os.path import isfile, join
@@ -433,9 +435,8 @@ def generate_tif(depth = 4, filename = ""):
     url = 'https://github.com/caioFagonde/WaterQuality_Satellite/blob/master/dissolved_oxygen.tif'
     image = 'dissolved_oxygen.tif'
     os.environ['LOCALTILESERVER_CLIENT_PREFIX'] = 'proxy/{port}'
-    m = leafmap.Map(latlon_control=False)
-    m.add_raster(image, band = 1, layer_name = "Dissolved Oxygen", projection = "EPSG:4326")
-    m.to_streamlit()
+    Map(center = (centre_lat, centre_lon), zoom = 10, min_zoom = 1, max_zoom = 20, 
+    basemap=basemaps.Stamen.Terrain)
     
     
 
