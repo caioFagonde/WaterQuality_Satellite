@@ -434,8 +434,8 @@ for i in range(0,len(np.array(onlyfiles))):
         depth2 = 1.5
         depth3 = 3.8
         dissolved_oxygen_1 = regr.intercept_[0] + coefficients.iat[0,1]*depth1 + coefficients.iat[1,1] *band_blue.astype(float) + coefficients.iat[2,1]*band_green.astype(float) + coefficients.iat[3,1]*band_red.astype(float) + coefficients.iat[4,1]*band_nir.astype(float) + coefficients.iat[5,1]*secc.astype(float)
-        dissolved_oxygen_2 = regr.intercept_[0] + coefficients.iat[0,1]*depth1 + coefficients.iat[1,1] *band_blue.astype(float) + coefficients.iat[2,1]*band_green.astype(float) + coefficients.iat[3,1]*band_red.astype(float) + coefficients.iat[4,1]*band_nir.astype(float) + coefficients.iat[5,1]*secc.astype(float)
-        dissolved_oxygen_3 = regr.intercept_[0] + coefficients.iat[0,1]*depth1 + coefficients.iat[1,1] *band_blue.astype(float) + coefficients.iat[2,1]*band_green.astype(float) + coefficients.iat[3,1]*band_red.astype(float) + coefficients.iat[4,1]*band_nir.astype(float) + coefficients.iat[5,1]*secc.astype(float)
+        dissolved_oxygen_2 = regr.intercept_[0] + coefficients.iat[0,1]*depth2 + coefficients.iat[1,1] *band_blue.astype(float) + coefficients.iat[2,1]*band_green.astype(float) + coefficients.iat[3,1]*band_red.astype(float) + coefficients.iat[4,1]*band_nir.astype(float) + coefficients.iat[5,1]*secc.astype(float)
+        dissolved_oxygen_3 = regr.intercept_[0] + coefficients.iat[0,1]*depth3 + coefficients.iat[1,1] *band_blue.astype(float) + coefficients.iat[2,1]*band_green.astype(float) + coefficients.iat[3,1]*band_red.astype(float) + coefficients.iat[4,1]*band_nir.astype(float) + coefficients.iat[5,1]*secc.astype(float)
         if k == 0:
             B_pred_1.append(dissolved_oxygen_1)
             B_pred_2.append(dissolved_oxygen_2)
