@@ -464,16 +464,10 @@ for i in range(0,len(np.array(onlyfiles))):
 
 def PlotFrom2DF(df1,df2, title, field1,field2):
     
-    df1["smooth"] = np.polyval(np.polyfit(time.mktime(df1["dt"]).astype(float),df1[field1], 5), time.mktime(df1["dt"]).astype(float))
-    df2["dt"] = df1["dt"]
-    df2["smooth"] = np.polyval(np.polyfit(time.mktime(df2["Aux_date"]).astype(float),df2[field2], 5), time.mktime(df2["dt"]).astype(float))
-    
     fig, axes = plt.subplots(figsize = (20,5))
     axes.set_title(title)
-    #data1.plot()
-    #data2.plot()
-    df1.plot(ax = axes, kind='line',x='dt',y="smooth",color='red')
-    df2.plot(ax = axes, kind='line',x='Aux_date',y="smooth",color='blue')
+    df1.plot(ax = axes, kind='line',x='dt',y=field1,color='red')
+    df2.plot(ax = axes, kind='line',x='Aux_date',y=field2,color='blue')
     plt.show()
     st.pyplot(fig)
 
