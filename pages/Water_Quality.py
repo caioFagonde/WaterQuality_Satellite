@@ -400,13 +400,13 @@ def generate_tif(depth = 4, filename = ""):
     a0 = -3.24
     a1 = 14.72
     a2 = -18.48
-    bathymetry = a0 + a1*np.log(band_blue/10000) + a2*np.log(band_green/10000)
+    bathymetry = a0 + a1*np.log(band_blue) + a2*np.log(band_green)
     
     # NDWI for masking
     ndwi = (band_green.astype(float) - band_nir.astype(float))/(band_green.astype(float) + band_nir.astype(float))
     dissolved_oxygen[ndwi < -0.4] = np.nan
     bathymetry[ndwi < -0.4] = np.nan
-    bathymetry[bathymetry < 0] = np.nan
+    bathymetry[bathymetry < 0] = 0
     bathymetry[bathymetry > 20] = np.nan
     # check range values, excluding NaN
     #np.nanmin(dissolved_oxygen), np.nanmax(dissolved_oxygen)
@@ -496,9 +496,9 @@ def generate_tif(depth = 4, filename = ""):
     fig.savefig("do_legends.png", dpi=400, bbox_inches='tight', pad_inches=0.3)
     st.pyplot(fig)
     
-    min= 0 #np.nanmin(bathymetry)
-    max= 20 #np.nanmax(bathymetry)
-    mid= 10
+    min= np.nanmin(bathymetry)
+    max= np.nanmax(bathymetry)
+    mid= (min + max)/2
     
     fig = plt.figure(figsize=(20,10))
     ax = fig.add_subplot(111)
