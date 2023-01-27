@@ -31,4 +31,4 @@ st.sidebar.info(
 
 Map = leafmap.Map()
 Map.add_raster("dissolved_oxygen.tif",layer_name = "Dissolved Oxygen")
-Map
+Map.to_streamlit()
