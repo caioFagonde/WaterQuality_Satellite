@@ -51,7 +51,7 @@ Um aplicativo para análise de corpos de água e obtenção de seus parâmetros 
 """
 )
 
-
+ee_authenticate()
 cog_list = load_cog_list()
 cog = st.selectbox("Selecione um parâmetro de qualidade.", cog_list)
 
