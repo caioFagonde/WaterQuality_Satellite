@@ -10,6 +10,7 @@ import leafmap.foliumap as leafmap
 import leafmap.colormaps as cm
 import streamlit as st
 import geemap
+import ee
 
 st.set_page_config(layout="wide")
 
@@ -31,6 +32,6 @@ st.sidebar.info(
 def ee_authenticate(token_name="EARTHENGINE_TOKEN"):
     geemap.ee_initialize(token_name=token_name)
 
-
+ee.Initialize()
 Map = geemap.Map(center=[40,-100], zoom=4)
 Map
