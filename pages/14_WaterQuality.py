@@ -27,33 +27,10 @@ st.sidebar.info(
     """
 )
 
-
-@st.cache
-def load_cog_list():
-    cog_list = ['Chlorofila-a','Profundidade de Secchi','Turbidez','Batimetria','Oxigênio Dissolvido']
-    return cog_list
-
-
-@st.cache
-def get_palettes():
-    return list(cm.palettes.keys())
-    # palettes = dir(palettable.matplotlib)[:-16]
-    # return ["matplotlib." + p for p in palettes]
-
 @st.cache(persist=True)
 def ee_authenticate(token_name="EARTHENGINE_TOKEN"):
     geemap.ee_initialize(token_name=token_name)
 
-st.title("Visualizando parâmetros hídricos")
-st.markdown(
-    """
-Um aplicativo para análise de corpos de água e obtenção de seus parâmetros de qualidade.
-"""
-)
-
-ee_authenticate(token_name="EARTHENGINE_TOKEN")
-cog_list = load_cog_list()
-cog = st.selectbox("Selecione um parâmetro de qualidade.", cog_list)
 
 Map = geemap.Map(center=[40,-100], zoom=4)
 Map
