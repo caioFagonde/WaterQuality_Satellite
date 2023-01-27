@@ -364,6 +364,11 @@ regr_secc = linear_model.LinearRegression()
 regr_secc.fit(X, y)
 coefficients_secc = pandas.concat([pandas.DataFrame(X.columns),pandas.DataFrame(np.transpose(regr.coef_))], axis = 1)
 
+# generate regression model
+absolute_path = os.getcwd()
+relative_path = "PuroPeixe/files/"
+mypath = os.path.join(absolute_path, relative_path) 
+onlyfiles = [f for f in listdir(mypath) if isfile(join(mypath, f))]
 ## Compare predictions
 for i in range(0,len(np.array(onlyfiles))):
     filename = mypath + onlyfiles[i]
