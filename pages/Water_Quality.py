@@ -324,8 +324,8 @@ def generate_tif(depth = 4, filename = ""):
         count = 1)
     
     # Write band calculations to a new raster file
-    #with rasterio.open('dissolved_oxygen.tif', 'w', **kwargs) as dst:
-    #        dst.write_band(1, dissolved_oxygen.astype(rasterio.float32))
+    with rasterio.open('dissolved_oxygen.tif', 'w', **kwargs) as dst:
+        dst.write_band(1, dissolved_oxygen.astype(rasterio.float32))
     
     
     # In[96]:
@@ -434,7 +434,7 @@ def generate_tif(depth = 4, filename = ""):
     image = 'dissolved_oxygen.tif'
     
     m = leafmap.Map(latlon_control=False)
-    m.add_cog_layer(url)
+    m.add_cog_layer(url, bands = ('b1'))
     m.to_streamlit()
     
     
