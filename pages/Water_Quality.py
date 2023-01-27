@@ -463,8 +463,8 @@ for i in range(0,len(np.array(onlyfiles))):
 
 def PlotFrom2DF(df1,df2, title, field1,field2):
     
-    df1["smooth"] = np.polyval(np.polyfit(df["dt"].astype(int),df[field1], 5), df["dt"].astype(int))
-    df2["smooth"] = np.polyval(np.polyfit(df["Aux_date"].astype(int),df[field2], 5), df["Aux_date"].astype(int))
+    df1["smooth"] = np.polyval(np.polyfit(df1["dt"].astype(int),df1[field1], 5), df1["dt"].astype(int))
+    df2["smooth"] = np.polyval(np.polyfit(df2["Aux_date"].astype(int),df2[field2], 5), df2["Aux_date"].astype(int))
     
     fig, axes = plt.subplots(figsize = (20,5))
     axes.set_title(title)
