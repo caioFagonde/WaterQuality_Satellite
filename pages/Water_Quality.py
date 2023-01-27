@@ -401,7 +401,7 @@ def generate_tif(depth = 4, filename = ""):
     a1 = 14.72
     a2 = -18.48
     bathymetry = a0 + a1*np.log(band_blue/10000) + a2*np.log(band_green/10000)
-    
+    bathymetry = -1.1603 * (band_blue/band_green) + 53.988
     
     # NDWI for masking
     ndwi = (band_green.astype(float) - band_nir.astype(float))/(band_green.astype(float) + band_nir.astype(float))
