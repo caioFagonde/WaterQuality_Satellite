@@ -496,8 +496,8 @@ def generate_tif(depth = 4, filename = ""):
     fig.savefig("do_legends.png", dpi=400, bbox_inches='tight', pad_inches=0.3)
     st.pyplot(fig)
     
-    min= np.nanmin(bathymetry)
-    max= np.nanmax(bathymetry)
+    min= 0 #np.nanmin(bathymetry)
+    max= 10 #np.nanmax(bathymetry)
     mid= (min + max)/2
     
     fig = plt.figure(figsize=(20,10))
