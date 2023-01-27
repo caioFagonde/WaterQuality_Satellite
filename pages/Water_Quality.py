@@ -6,6 +6,7 @@ Created on Fri Jan 27 04:47:14 2023
 """
 
 import os
+import time
 import folium
 from streamlit_folium import st_folium, folium_static
 from localtileserver import get_leaflet_tile_layer
@@ -463,9 +464,9 @@ for i in range(0,len(np.array(onlyfiles))):
 
 def PlotFrom2DF(df1,df2, title, field1,field2):
     
-    df1["smooth"] = np.polyval(np.polyfit(df1["dt"].astype(float),df1[field1], 5), df1["dt"].astype(float))
+    df1["smooth"] = np.polyval(np.polyfit(time.mktime(df1["dt"]).astype(float),df1[field1], 5), time.mktime(df1["dt"]).astype(float))
     df2["dt"] = df1["dt"]
-    df2["smooth"] = np.polyval(np.polyfit(df2["Aux_date"].astype(float),df2[field2], 5), df2["dt"].astype(float))
+    df2["smooth"] = np.polyval(np.polyfit(time.mktime(df2["Aux_date"]).astype(float),df2[field2], 5), time.mktime(df2["dt"]).astype(float))
     
     fig, axes = plt.subplots(figsize = (20,5))
     axes.set_title(title)
