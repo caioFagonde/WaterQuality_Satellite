@@ -465,7 +465,7 @@ def generate_tif(depth = 4, filename = ""):
     # Overlay raster (RGB) called img using add_child() function (opacity and bounding box set)
     bounds = ((bounds_fin[0][1],bounds_fin[0][0]),(bounds_fin[1][1],bounds_fin[1][0]))
     st.write(bounds)
-    image = ipyleaflet.ImageOverlay("do.png", opacity=.8,bounds = bounds, transparent = True)
+    image = ipyleaflet.ImageOverlay("do.png", bounds = bounds)
     m.add_layer(image);
     m.add_control(ipyleaflet.Layers_Control())
     
