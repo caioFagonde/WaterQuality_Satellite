@@ -464,8 +464,6 @@ for i in range(0,len(np.array(onlyfiles))):
 def PlotFrom2DF(df1,df2, title, field1,field2):
     
     
-    df1 = df1.set_index('Id')
-    df1['fit'] = df1.groupby('Id').apply(lambda dt: np.polyfit(df1.dt, df1[field1], 1))
     fig, axes = plt.subplots(figsize = (20,5))
     axes.set_title(title)
     df1.trendline.plot(ax = axes, kind='scatter',x='dt',y=field1,color='red')
