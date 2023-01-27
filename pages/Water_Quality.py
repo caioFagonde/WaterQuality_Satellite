@@ -430,8 +430,13 @@ def generate_tif(depth = 4, filename = ""):
     # Finding the centre latitude & longitude    
     centre_lon = bounds_fin[0][1] + (bounds_fin[1][1] - bounds_fin[0][1])/2
     centre_lat = bounds_fin[0][0] + (bounds_fin[1][0] - bounds_fin[0][0])/2
+    url = 'https://github.com/caioFagonde/WaterQuality_Satellite/blob/master/dissolved_oxygen.tif'
+    image = 'srtm90.tif'
+    if not os.path.exists(image):
+        leafmap.download_file(url, image)
+    
     Map = leafmap.Map()
-    Map.add_raster(in_path,layer_name = "Dissolved Oxygen")
+    Map.add_raster(image,layer_name = "Dissolved Oxygen")
     Map.to_streamlit()
     
     
