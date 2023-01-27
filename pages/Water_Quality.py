@@ -434,7 +434,7 @@ def generate_tif(depth = 4, filename = ""):
     image = 'dissolved_oxygen.tif'
     
     m = leafmap.Map(latlon_control=False)
-    m.add_cog_layer(url, bands = ('b1'))
+    m.add_cog_layer(url, bands = ('1'))
     m.to_streamlit()
     
     
