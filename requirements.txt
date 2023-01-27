@@ -8,6 +8,9 @@ leafmap
 localtileserver
 nbserverproxy
 owslib
+rasterio
+pandas
+matplotlib
 palettable
 earthengine-api
 plotly
