@@ -13,8 +13,6 @@ st.sidebar.info(
 # Customize page title
 st.title("Análise de qualidade da água")
 
-
-
 m = leafmap.Map(minimap_control=True)
 m.add_basemap("OpenTopoMap")
 m.to_streamlit(height=500)
