@@ -579,7 +579,7 @@ def generate_tif(depth = 4, filename = ""):
     
     
 
-depth = st.number_input('Escolha a profundidade', min_value = 0.1, max_value = 5,step = 0.1)
+depth = st.number_input('Escolha a profundidade', min_value = float(0.1), max_value = float(5),step = float(0.1))
 image = option = st.selectbox(
     'Escolha a imagem',
     [onlyfiles[1],onlyfiles[len(onlyfiles)-1]])
