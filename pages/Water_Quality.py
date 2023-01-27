@@ -461,15 +461,7 @@ def generate_tif(depth = 4, filename = ""):
 
         marker = ipyleaflet.Marker(location=(points[k].lat, points[k].lon), draggable=False, title = info)
         m.add_layer(marker);
-
-
-
-
-
-
-    
-    
-    
+    print(os.path.exists('do.png'))
     # Overlay raster (RGB) called img using add_child() function (opacity and bounding box set)
     image = ipyleaflet.ImageOverlay("do.png", opacity=.8,bounds = bounds_fin, transparent = True)
     m.add_layer(image);
