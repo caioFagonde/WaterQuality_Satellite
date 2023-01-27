@@ -484,6 +484,13 @@ def generate_tif(depth = 4, filename = ""):
     folium.TileLayer('Stamen Water Color', transparent = True).add_to(m)
     folium.TileLayer('cartodbpositron', transparent = True).add_to(m)
     folium.TileLayer('cartodbdark_matter', transparent = True).add_to(m)
+    folium.TileLayer(
+        tiles = 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+        attr = 'Esri',
+        name = 'Esri Satellite',
+        overlay = False,
+        control = True
+       ).add_to(m)
     folium.LayerControl().add_to(m)
     # Display map 
     folium_static(m, width=700, height=450)
