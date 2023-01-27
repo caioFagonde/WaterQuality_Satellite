@@ -493,9 +493,10 @@ def generate_tif(depth = 4, filename = ""):
     cbar = fig.colorbar(cax, orientation='vertical', shrink=0.65)
     
     fig.savefig("do_legends.png", dpi=400, bbox_inches='tight', pad_inches=0.3)
+    st.pyplot(fig)
     
-    min= 0 #np.nanmin(bathymetry)
-    max= 10 #np.nanmax(bathymetry)
+    min= 2 #np.nanmin(bathymetry)
+    max= 8 #np.nanmax(bathymetry)
     mid= (max + min)/2
     
     fig = plt.figure(figsize=(20,10))
