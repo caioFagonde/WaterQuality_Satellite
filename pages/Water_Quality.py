@@ -432,11 +432,49 @@ def generate_tif(depth = 4, filename = ""):
     # Finding the centre latitude & longitude    
     centre_lon = bounds_fin[0][1] + (bounds_fin[1][1] - bounds_fin[0][1])/2
     centre_lat = bounds_fin[0][0] + (bounds_fin[1][0] - bounds_fin[0][0])/2
-    url = 'https://github.com/caioFagonde/WaterQuality_Satellite/blob/master/dissolved_oxygen.tif'
-    image = 'dissolved_oxygen.tif'
-    os.environ['LOCALTILESERVER_CLIENT_PREFIX'] = 'proxy/{port}'
-    Map(center = (centre_lat, centre_lon), zoom = 10, min_zoom = 1, max_zoom = 20, 
+    m = Map(center = (B.lat, B.lon), zoom = 10, min_zoom = 1, max_zoom = 20, 
     basemap=basemaps.Stamen.Terrain)
+    
+    tooltip = "Informações"
+    for k in range(0,len(points)):
+        src = rasterio.open("dissolved_oxygen.tif")
+        transformer = Transformer.from_crs("EPSG:4326", src.crs, always_xy=True)
+        xx, yy = transformer.transform(points[k].lon, points[k].lat)
+
+        # get value from grid
+        value = list(src.sample([(xx, yy)]))[0]
+        index = len(df) - 1
+        if k == 0:
+            do_last = df.loc[index,'B_avg']
+            depth_last = df.loc[index,'Profundidade de Secchi (m)']
+        elif k == 1:
+            do_last = df.loc[index,'S_avg']
+            depth_last = df.loc[index,'METROS.1']
+        elif k == 2:
+            do_last = df.loc[index,'P_avg']
+            depth_last =df.loc[index,'METROS']
+        elif k == 3:
+            do_last = df.loc[index,'Z_avg']
+            depth_last = df.loc[index,'METROS.2']
+        do_last = value
+        info = points[k].name + " Oxigênio dissolvido: " + str(do_last) + " mg/L" 
+
+        marker = ipyleaflet.Marker(location=(points[k].lat, points[k].lon), draggable=False, title = info)
+        m.add_layer(marker);
+
+
+
+
+
+
+    
+    
+    
+    # Overlay raster (RGB) called img using add_child() function (opacity and bounding box set)
+    image = ipyleaflet.ImageOverlay("do.png", opacity=.8,bounds = bounds_fin, transparent = True)
+    m.add_layer(image);
+    m.add_control(ipyleaflet.Layers_Control())
+    
     
     
 
