@@ -398,7 +398,7 @@ def generate_tif(depth = 4, filename = ""):
     
     # NDWI for masking
     ndwi = (band_green.astype(float) - band_nir.astype(float))/(band_green.astype(float) + band_nir.astype(float))
-    dissolved_oxygen[ndwi < -0.2] = np.nan
+    dissolved_oxygen[ndwi < -0.4] = np.nan
     # check range values, excluding NaN
     #np.nanmin(dissolved_oxygen), np.nanmax(dissolved_oxygen)
     #np.nanmin(dissolved_oxygen), np.nanmax(dissolved_oxygen)
@@ -443,8 +443,8 @@ def generate_tif(depth = 4, filename = ""):
         
     # Set min/max values from range for image (excluding NAN)
     # set midpoint according to how NDVI is interpreted: https://earthobservatory.nasa.gov/Features/MeasuringVegetation/
-    min= 4 #np.nanmin(dissolved_oxygen)
-    max= 8 #np.nanmax(dissolved_oxygen)
+    min= 5 #np.nanmin(dissolved_oxygen)
+    max= 7 #np.nanmax(dissolved_oxygen)
     mid=6
     
     fig = plt.figure(figsize=(20,10))
