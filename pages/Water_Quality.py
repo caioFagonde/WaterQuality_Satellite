@@ -432,9 +432,9 @@ def generate_tif(depth = 4, filename = ""):
     centre_lat = bounds_fin[0][0] + (bounds_fin[1][0] - bounds_fin[0][0])/2
     url = 'https://github.com/caioFagonde/WaterQuality_Satellite/blob/master/dissolved_oxygen.tif'
     image = 'dissolved_oxygen.tif'
-    
+    os.environ['LOCALTILESERVER_CLIENT_PREFIX'] = 'proxy/{port}'
     m = leafmap.Map(latlon_control=False)
-    m.plot_raster(image)
+    m.add_raster(image, band = 1)
     m.to_streamlit()
     
     
