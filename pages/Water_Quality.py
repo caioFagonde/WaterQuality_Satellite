@@ -496,15 +496,15 @@ def generate_tif(depth = 4, filename = ""):
     fig.savefig("do_legends.png", dpi=400, bbox_inches='tight', pad_inches=0.3)
     st.pyplot(fig)
     
-    min= np.nanmin(bathymetry)
-    max= np.nanmax(bathymetry)
-    mid= (max + min)/2
+    min= 0 #np.nanmin(bathymetry)
+    max= 20 #np.nanmax(bathymetry)
+    mid= 10
     
     fig = plt.figure(figsize=(20,10))
     ax = fig.add_subplot(111)
     
     # diverging color scheme chosen from https://matplotlib.org/users/colormaps.html
-    cmap = 'Set1'# plt.cm.RdYlGn 
+    cmap = plt.cm.RdYlGn # plt.cm.RdYlGn 
     
     cax = ax.imshow(dissolved_oxygen, cmap=cmap, clim=(min, max), norm=MidpointNormalize(midpoint=mid,vmin=min, vmax=max))
     
