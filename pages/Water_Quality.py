@@ -493,7 +493,7 @@ def generate_tif(depth = 4, filename = ""):
        ).add_to(m)
     folium.LayerControl().add_to(m)
     # Display map 
-    folium_static(m, width=1224, height=450)
+    folium_static(m, width=1150, height=450)
     
     
     
