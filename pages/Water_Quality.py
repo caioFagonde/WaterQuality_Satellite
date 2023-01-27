@@ -6,6 +6,8 @@ Created on Fri Jan 27 04:47:14 2023
 """
 
 import os
+import folium
+from streamlit_folium import st_folium, folium_static
 from localtileserver import get_leaflet_tile_layer
 import leafmap.foliumap as leafmap
 import leafmap.colormaps as cm
@@ -433,9 +435,9 @@ def generate_tif(depth = 4, filename = ""):
     # Finding the centre latitude & longitude    
     centre_lon = bounds_fin[0][1] + (bounds_fin[1][1] - bounds_fin[0][1])/2
     centre_lat = bounds_fin[0][0] + (bounds_fin[1][0] - bounds_fin[0][0])/2
-    m = Map(center = (B.lat, B.lon), zoom = 10, min_zoom = 1, max_zoom = 20, 
-    basemap=basemaps.Stamen.Terrain)
-    
+    m = folium.Map(location=[B.lat, B.lon],
+                       tiles='Stamen Terrain', zoom_start = 17)
+
     tooltip = "Informações"
     for k in range(0,len(points)):
         src = rasterio.open("dissolved_oxygen.tif")
@@ -460,17 +462,31 @@ def generate_tif(depth = 4, filename = ""):
         do_last = value
         info = points[k].name + " Oxigênio dissolvido: " + str(do_last) + " mg/L" 
 
-        marker = ipyleaflet.Marker(location=(points[k].lat, points[k].lon), draggable=False, title = info)
-        m.add_layer(marker);
-    print(os.path.exists('do.png'))
+
+
+        folium.Marker(
+            [points[k].lat, points[k].lon], popup= info, tooltip=tooltip
+        ).add_to(m)
+        
+
+
+
+
+
+
     # Overlay raster (RGB) called img using add_child() function (opacity and bounding box set)
-    bounds = ((bounds_fin[0][1],bounds_fin[0][0]),(bounds_fin[1][1],bounds_fin[1][0]))
-    st.write(bounds)
-    #image = ipyleaflet.ImageOverlay("do.png", bounds = bounds)
-    l = get_leaflet_tile_layer('dissolved_oxygen.tif',
-                           band=1, palette='matplotlib.Viridis_20', vmin=3, vmax=10)
-    m.add_layer(l)
-    m
+    m.add_child(folium.raster_layers.ImageOverlay("do.png", opacity=.8, 
+                                     bounds = bounds_fin, transparent = True))
+
+    folium.TileLayer('Stamen Terrain', transparent = True).add_to(m)
+    folium.TileLayer('openstreetmap', transparant = True).add_to(m)
+    folium.TileLayer('Stamen Toner', transparent = True).add_to(m)
+    folium.TileLayer('Stamen Water Color', transparent = True).add_to(m)
+    folium.TileLayer('cartodbpositron', transparent = True).add_to(m)
+    folium.TileLayer('cartodbdark_matter', transparent = True).add_to(m)
+    folium.LayerControl().add_to(m)
+    # Display map 
+    folium_static(m, width=700, height=450)
     
     
     
