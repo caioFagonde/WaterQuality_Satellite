@@ -479,10 +479,10 @@ def PlotFrom2DF(df1,df2, title, field1,field2):
     
     fig, axes = plt.subplots(figsize = (20,5))
     axes.set_title(title)
-    data1.plot()
-    data2.plot()
-    #df1.trendline.plot(ax = axes, kind='scatter',x='dt',y=field1,color='red')
-    #df2.trendline.plot(ax = axes, kind='scatter',x='Aux_date',y=field2,color='blue')
+    #data1.plot()
+    #data2.plot()
+    df1.trendline.plot(ax = axes, kind='line',x='dt',y=field1,color='red')
+    df2.trendline.plot(ax = axes, kind='line',x='Aux_date',y=field2,color='blue')
     plt.show()
     st.pyplot(fig)
 
