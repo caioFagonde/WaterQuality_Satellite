@@ -442,7 +442,7 @@ for i in range(0,len(np.array(onlyfiles))):
             Z_date_aux.append(dateTime)
         
 dB = {'B_pred1': B_pred_1,'B_pred2': B_pred_2, 'B_pred3': B_pred_3, 'B_date' : B_date_aux}
-dfB2 = pandas.DataFrame(data=d)     
+dfB2 = pandas.DataFrame(data=dB)     
 fig, axes = plt.subplots(figsize = (20,5))
 axes.set_title("Batelão - Real vs Previsto - 0.3 metros de profundidade")
 df.plot(ax = axes, kind='scatter',x='dt',y='B_avg',color='red')
