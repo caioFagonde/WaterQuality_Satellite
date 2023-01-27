@@ -346,12 +346,111 @@ from sklearn import linear_model
 
 regr = linear_model.LinearRegression()
 regr.fit(X, y)
-coefficients = pandas.concat([pandas.DataFrame(X.columns),pandas.DataFrame(np.transpose(regr.coef_))], axis = 1)
+coefficients = pandas.concat([pandas.DataFrame(X.columns),pandas.DataFrame(np.transpose(regr.coef_))], axis = 1) 
 
 regr_secc = linear_model.LinearRegression()
 regr_secc.fit(X, y)
 coefficients_secc = pandas.concat([pandas.DataFrame(X.columns),pandas.DataFrame(np.transpose(regr.coef_))], axis = 1)
 
+## Compare predictions
+for i in range(0,len(np.array(onlyfiles))):
+    filename = mypath + onlyfiles[i]
+    src = rasterio.open(filename)
+    band_red = src.read(6)
+    
+    band_nir = src.read(8)
+    
+    band_green = src.read(4)
+        
+    band_blue = src.read(2)
+    strAux = onlyfiles[i].split('/')[0]
+    year = strAux[0:4]
+    mon = strAux[4:6]
+    day = strAux[6:8]
+    H = strAux[9:11]
+    M = strAux[11:13]
+    fDate = day + "/" + mon + "/" + year + " " + H +":" + M
+    dateTime = datetime.datetime.strptime(fDate, '%d/%m/%Y %H:%M')
+    index = (pandas.to_datetime(df['dt'])-pandas.to_datetime(dateTime)).abs().idxmin()
+    idx = df.loc[index,'dt']
+    
+    B_pred_1 = [];
+    B_pred_2 = [];
+    B_pred_3 = [];
+    B_pred_secchi = [];
+    B_date_aux = [];
+    S_pred_1 = [];
+    S_pred_2 = [];
+    S_pred_3 = [];
+    S_pred_secchi = [];
+    S_date_aux = [];
+    P_pred_1 = [];
+    P_pred_2 = [];
+    P_pred_3 = [];
+    P_pred_secchi = [];
+    P_date_aux = [];
+    Z_pred_1 = [];
+    Z_pred_2 = [];
+    Z_pred_3 = [];
+    Z_pred_secchi = [];
+    Z_date_aux = [];
+    
+    
+    for k in range(0,len(points)):
+        #rows, cols = rasterio.transform.rowcol(src.transform, points[k].lon, points[k].lat)
+        #vals = src.sample((rows, cols))
+        transformer = Transformer.from_crs("EPSG:4326", src.crs, always_xy=True)
+        xx, yy = transformer.transform(points[k].lon, points[k].lat)
+
+        # get value from grid
+        value = list(src.sample([(xx, yy)]))[0]
+        band_blue = value[1]
+        band_green = value[3]
+        band_red = value[5]
+        band_nir = value[7]
+        
+        secc = regr_secc.intercept_[0] + coefficients_secc.iat[0,1] *band_blue.astype(float) + coefficients_secc.iat[1,1]*band_green.astype(float) + coefficients_secc.iat[2,1]*band_red.astype(float) + coefficients_secc.iat[3,1]*band_nir.astype(float)
+        depth1 = 0.3
+        depth2 = 1.5
+        depth3 = 3.8
+        dissolved_oxygen_1 = regr.intercept_[0] + coefficients.iat[0,1]*depth1 + coefficients.iat[1,1] *band_blue.astype(float) + coefficients.iat[2,1]*band_green.astype(float) + coefficients.iat[3,1]*band_red.astype(float) + coefficients.iat[4,1]*band_nir.astype(float) + coefficients.iat[5,1]*secc.astype(float)
+        dissolved_oxygen_2 = regr.intercept_[0] + coefficients.iat[0,1]*depth1 + coefficients.iat[1,1] *band_blue.astype(float) + coefficients.iat[2,1]*band_green.astype(float) + coefficients.iat[3,1]*band_red.astype(float) + coefficients.iat[4,1]*band_nir.astype(float) + coefficients.iat[5,1]*secc.astype(float)
+        dissolved_oxygen_3 = regr.intercept_[0] + coefficients.iat[0,1]*depth1 + coefficients.iat[1,1] *band_blue.astype(float) + coefficients.iat[2,1]*band_green.astype(float) + coefficients.iat[3,1]*band_red.astype(float) + coefficients.iat[4,1]*band_nir.astype(float) + coefficients.iat[5,1]*secc.astype(float)
+        if k == 0:
+            B_pred_1.append(dissolved_oxygen_1)
+            B_pred_2.append(dissolved_oxygen_2)
+            B_pred_3.append(dissolved_oxygen_3)
+            B_pred_secchi.append(secc)
+            B_date_aux.append(dateTime)
+        elif k == 1:
+            S_pred_1.append(dissolved_oxygen_1)
+            S_pred_2.append(dissolved_oxygen_2)
+            S_pred_3.append(dissolved_oxygen_3)
+            S_pred_secchi.append(secc)
+            S_date_aux.append(dateTime)
+        elif k == 2:
+            P_pred_1.append(dissolved_oxygen_1)
+            P_pred_2.append(dissolved_oxygen_2)
+            P_pred_3.append(dissolved_oxygen_3)
+            P_pred_secchi.append(secc)
+            P_date_aux.append(dateTime)
+        elif k == 3:
+            Z_pred_1.append(dissolved_oxygen_1)
+            Z_pred_2.append(dissolved_oxygen_2)
+            Z_pred_3.append(dissolved_oxygen_3)
+            Z_pred_secchi.append(secc)
+            Z_date_aux.append(dateTime)
+        
+dB = {'B_pred1': B_pred_1,'B_pred2': B_pred_2, 'B_pred3': B_pred_3, 'B_date' : B_date_aux}
+dfB2 = pandas.DataFrame(data=d)     
+fig, axes = plt.subplots(figsize = (20,5))
+axes.set_title("Batelão - Real vs Previsto - 0.3 metros de profundidade")
+df.plot(ax = axes, kind='scatter',x='dt',y='B_avg',color='red')
+dfB2.plot(ax = axes, kind='scatter',x='B_date',y='B_pred1',color='blue')
+plt.show()
+st.pyplot(fig)
+
+## 
 import statsmodels.api as sm
 X1 = sm.add_constant(X)
 result = sm.OLS(y, X1).fit()
@@ -398,8 +497,8 @@ def generate_tif(depth = 4, filename = ""):
     
     # bathymetry
     a0 = -3.24
-    a1 = 7.72
-    a2 = -16.48
+    a1 = 14.72
+    a2 = -18.48
     bathymetry = a0 + a1*np.log(band_blue/10000) + a2*np.log(band_green/10000)
     
     # NDWI for masking
