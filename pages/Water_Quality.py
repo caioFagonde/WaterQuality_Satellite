@@ -469,8 +469,8 @@ def generate_tif(depth = 4, filename = ""):
     #image = ipyleaflet.ImageOverlay("do.png", bounds = bounds)
     l = get_leaflet_tile_layer('dissolved_oxygen.tif',
                            band=1, palette='matplotlib.Viridis_20', vmin=3, vmax=10)
-    m.add_layer(l);
-    m.add_control(ipyleaflet.Layers_Control())
+    m.add_layer(l)
+    m
     
     
     
