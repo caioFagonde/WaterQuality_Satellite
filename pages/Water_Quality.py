@@ -459,15 +459,51 @@ for i in range(0,len(np.array(onlyfiles))):
             Z_pred_3.append(dissolved_oxygen_3)
             Z_pred_secchi.append(secc)
             Z_date_aux.append(dateTime)
-st.write(B_pred_1)
-dB = {'B_pred1': B_pred_1,'B_pred2': B_pred_2, 'B_pred3': B_pred_3, 'B_date' : B_date_aux}
+#st.write(B_pred_1)
+
+def PlotFrom2DF(df1,df2, title, field1,field2):
+    
+    
+    df1 = df1.set_index('Id')
+    df1['fit'] = df1.groupby('Id').apply(lambda dt: np.polyfit(df1.dt, df1[field1], 1))
+    fig, axes = plt.subplots(figsize = (20,5))
+    axes.set_title(title)
+    df1.trendline.plot(ax = axes, kind='scatter',x='dt',y=field1,color='red')
+    df2.trendline.plot(ax = axes, kind='scatter',x='Aux_date',y=field2,color='blue')
+    plt.show()
+    st.pyplot(fig)
+
+
+dB = {'B_pred1': B_pred_1,'B_pred2': B_pred_2, 'B_pred3': B_pred_3, 'Aux_date' : B_date_aux}
 dfB2 = pandas.DataFrame(data=dB)     
-fig, axes = plt.subplots(figsize = (20,5))
-axes.set_title("Batelão - Real vs Previsto - 0.3 metros de profundidade")
-df.plot(ax = axes, kind='scatter',x='dt',y='B_avg',color='red')
-dfB2.plot(ax = axes, kind='scatter',x='B_date',y='B_pred1',color='blue')
-plt.show()
-st.pyplot(fig)
+
+dS = {'S_pred1': S_pred_1,'S_pred2': S_pred_2, 'S_pred3': S_pred_3, 'Aux_date' : S_date_aux}
+dfS2 = pandas.DataFrame(data=dS)     
+
+dP = {'P_pred1': P_pred_1,'P_pred2': P_pred_2, 'P_pred3': P_pred_3, 'Aux_date' : P_date_aux}
+dfP2 = pandas.DataFrame(data=dP)     
+
+dZ = {'Z_pred1': Z_pred_1,'Z_pred2': Z_pred_2, 'Z_pred3': Z_pred_3, 'Aux_date' : Z_date_aux}
+dfZ2 = pandas.DataFrame(data=dZ)     
+
+PlotFrom2DF(df, dfB2, "Batelão - 0.3 m",'BA1','B_pred1')
+PlotFrom2DF(df, dfB2, "Batelão - 1.5 m",'BA2','B_pred2')
+PlotFrom2DF(df, dfB2, "Batelão - 3.8 m",'BA3','B_pred3')
+
+PlotFrom2DF(df, dfS2, "6x6 - 0.3 m",'6x61','S_pred1')
+PlotFrom2DF(df, dfS2, "6x6 - 1.5 m",'6x62','S_pred2')
+PlotFrom2DF(df, dfS2, "6x6 - 3.8 m",'6x63','S_pred3')
+
+PlotFrom2DF(df, dfB2, "Porto - 0.3 m",'PORTO1','P_pred1')
+PlotFrom2DF(df, dfB2, "Porto - 1.5 m",'PORTO2','P_pred2')
+PlotFrom2DF(df, dfB2, "Porto - 3.8 m",'PORTO3','P_pred3')
+
+PlotFrom2DF(df, dfB2, "Zippy - 0.3 m",'ZIPPY1','Z_pred1')
+PlotFrom2DF(df, dfB2, "Zippy - 1.5 m",'ZIPPY2','Z_pred2')
+PlotFrom2DF(df, dfB2, "Zippy - 3.8 m",'ZIPPY3','Z_pred3')
+
+
+
 
 ## 
 import statsmodels.api as sm
