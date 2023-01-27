@@ -398,8 +398,8 @@ def generate_tif(depth = 4, filename = ""):
     
     # bathymetry
     a0 = -3.24
-    a1 = 18.72
-    a2 = -18.48
+    a1 = 14.72
+    a2 = -14.48
     bathymetry = a0 + a1*np.log(band_blue/10000) + a2*np.log(band_green/10000)
     
     # NDWI for masking
@@ -496,8 +496,8 @@ def generate_tif(depth = 4, filename = ""):
     fig.savefig("do_legends.png", dpi=400, bbox_inches='tight', pad_inches=0.3)
     st.pyplot(fig)
     
-    min= 0 #np.nanmin(bathymetry)
-    max= 10 #np.nanmax(bathymetry)
+    min= np.nanmin(bathymetry)
+    max= np.nanmax(bathymetry)
     mid= (min + max)/2
     
     fig = plt.figure(figsize=(20,10))
