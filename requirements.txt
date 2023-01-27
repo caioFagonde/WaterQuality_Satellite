@@ -12,6 +12,8 @@ rasterio
 pandas
 matplotlib
 palettable
+numpy
+folium
 earthengine-api
 plotly
 streamlit==1.12.2
