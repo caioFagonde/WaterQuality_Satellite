@@ -398,7 +398,7 @@ def generate_tif(depth = 4, filename = ""):
     
     # bathymetry
     a0 = -3.24
-    a1 = 13.72
+    a1 = 7.72
     a2 = -16.48
     bathymetry = a0 + a1*np.log(band_blue/10000) + a2*np.log(band_green/10000)
     
