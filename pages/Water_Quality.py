@@ -464,7 +464,7 @@ for i in range(0,len(np.array(onlyfiles))):
 def PlotFrom2DF(df1,df2, title, field1,field2):
     
     df1["smooth"] = np.polyval(np.polyfit(df1["dt"].astype(int),df1[field1], 5), df1["dt"].astype(int))
-    df2["smooth"] = np.polyval(np.polyfit(df2["Aux_date"].astype(int),df2[field2], 5), df2["Aux_date"].astype(int))
+    df2["smooth"] = np.polyval(np.polyfit(df2["Aux_date"].astype(int),df2[field2], 5), df1["dt"].astype(int))
     
     fig, axes = plt.subplots(figsize = (20,5))
     axes.set_title(title)
@@ -496,13 +496,13 @@ PlotFrom2DF(df, dfS2, "6x6 - 0.3 m",'6x61','S_pred1')
 PlotFrom2DF(df, dfS2, "6x6 - 1.5 m",'6x62','S_pred2')
 PlotFrom2DF(df, dfS2, "6x6 - 3.8 m",'6x63','S_pred3')
 
-PlotFrom2DF(df, dfB2, "Porto - 0.3 m",'PORTO1','P_pred1')
-PlotFrom2DF(df, dfB2, "Porto - 1.5 m",'PORTO2','P_pred2')
-PlotFrom2DF(df, dfB2, "Porto - 3.8 m",'PORTO3','P_pred3')
+PlotFrom2DF(df, dfP2, "Porto - 0.3 m",'PORTO1','P_pred1')
+PlotFrom2DF(df, dfP2, "Porto - 1.5 m",'PORTO2','P_pred2')
+PlotFrom2DF(df, dfP2, "Porto - 3.8 m",'PORTO3','P_pred3')
 
-PlotFrom2DF(df, dfB2, "Zippy - 0.3 m",'ZIPPY1','Z_pred1')
-PlotFrom2DF(df, dfB2, "Zippy - 1.5 m",'ZIPPY2','Z_pred2')
-PlotFrom2DF(df, dfB2, "Zippy - 3.8 m",'ZIPPY3','Z_pred3')
+PlotFrom2DF(df, dfZ2, "Zippy - 0.3 m",'ZIPPY1','Z_pred1')
+PlotFrom2DF(df, dfZ2, "Zippy - 1.5 m",'ZIPPY2','Z_pred2')
+PlotFrom2DF(df, dfZ2, "Zippy - 3.8 m",'ZIPPY3','Z_pred3')
 
 
 
