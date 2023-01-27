@@ -4,6 +4,7 @@ geemap
 geopandas
 jupyter-server-proxy
 keplergl
+ipyleaflet
 leafmap
 localtileserver
 nbserverproxy

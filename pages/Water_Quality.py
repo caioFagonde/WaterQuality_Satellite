@@ -434,7 +434,7 @@ def generate_tif(depth = 4, filename = ""):
     image = 'dissolved_oxygen.tif'
     os.environ['LOCALTILESERVER_CLIENT_PREFIX'] = 'proxy/{port}'
     m = leafmap.Map(latlon_control=False)
-    m.add_cog_layer(image, band = ("1"), layer_name = "Dissolved Oxygen", projection = "EPSG:4326")
+    m.add_raster(image, band = 1, layer_name = "Dissolved Oxygen", projection = "EPSG:4326")
     m.to_streamlit()
     
     
