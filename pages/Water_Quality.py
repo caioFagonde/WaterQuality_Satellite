@@ -369,6 +369,27 @@ absolute_path = os.getcwd()
 relative_path = "PuroPeixe/files/"
 mypath = os.path.join(absolute_path, relative_path) 
 onlyfiles = [f for f in listdir(mypath) if isfile(join(mypath, f))]
+
+B_pred_1 = [];
+B_pred_2 = [];
+B_pred_3 = [];
+B_pred_secchi = [];
+B_date_aux = [];
+S_pred_1 = [];
+S_pred_2 = [];
+S_pred_3 = [];
+S_pred_secchi = [];
+S_date_aux = [];
+P_pred_1 = [];
+P_pred_2 = [];
+P_pred_3 = [];
+P_pred_secchi = [];
+P_date_aux = [];
+Z_pred_1 = [];
+Z_pred_2 = [];
+Z_pred_3 = [];
+Z_pred_secchi = [];
+Z_date_aux = [];
 ## Compare predictions
 for i in range(0,len(np.array(onlyfiles))):
     filename = mypath + onlyfiles[i]
@@ -391,26 +412,7 @@ for i in range(0,len(np.array(onlyfiles))):
     index = (pandas.to_datetime(df['dt'])-pandas.to_datetime(dateTime)).abs().idxmin()
     idx = df.loc[index,'dt']
     
-    B_pred_1 = [];
-    B_pred_2 = [];
-    B_pred_3 = [];
-    B_pred_secchi = [];
-    B_date_aux = [];
-    S_pred_1 = [];
-    S_pred_2 = [];
-    S_pred_3 = [];
-    S_pred_secchi = [];
-    S_date_aux = [];
-    P_pred_1 = [];
-    P_pred_2 = [];
-    P_pred_3 = [];
-    P_pred_secchi = [];
-    P_date_aux = [];
-    Z_pred_1 = [];
-    Z_pred_2 = [];
-    Z_pred_3 = [];
-    Z_pred_secchi = [];
-    Z_date_aux = [];
+    
     
     
     for k in range(0,len(points)):
