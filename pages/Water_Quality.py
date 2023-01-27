@@ -397,7 +397,7 @@ def generate_tif(depth = 4, filename = ""):
     dissolved_oxygen[dissolved_oxygen > 20] = 20
     
     # bathymetry
-    a0 = - 3.24
+    a0 = 100.24
     a1 = 14.72
     a2 = -108.48
     bathymetry = a0 + a1*np.log(band_blue/10000) + a2*np.log(band_green/10000)
