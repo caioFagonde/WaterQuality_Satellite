@@ -440,7 +440,7 @@ for i in range(0,len(np.array(onlyfiles))):
             Z_pred_3.append(dissolved_oxygen_3)
             Z_pred_secchi.append(secc)
             Z_date_aux.append(dateTime)
-        
+st.write(B_pred_1)
 dB = {'B_pred1': B_pred_1,'B_pred2': B_pred_2, 'B_pred3': B_pred_3, 'B_date' : B_date_aux}
 dfB2 = pandas.DataFrame(data=dB)     
 fig, axes = plt.subplots(figsize = (20,5))
