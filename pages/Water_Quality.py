@@ -463,11 +463,26 @@ for i in range(0,len(np.array(onlyfiles))):
 
 def PlotFrom2DF(df1,df2, title, field1,field2):
     
+    x1 = range(1,len(df1[field1]))
+    y1 = df1[field1]
+    regression1 = pandas.ols(y=y1, x=x1)
+    
+    x2 = range(1,len(df2[field2]))
+    y2 = df2[field2]
+    regression2 = pandas.ols(y=y2, x=x2)
+    
+    trend1 = regression1.predict(beta=regression1.beta, x=x1) # slicing to only use last 30 points
+    data1 = pandas.DataFrame(index=x1, data={'y': y1, 'trend': trend1})
+    
+    trend2 = regression2.predict(beta=regression1.beta, x=x2) # slicing to only use last 30 points
+    data2 = pandas.DataFrame(index=x2, data={'y': y2, 'trend': trend2})
     
     fig, axes = plt.subplots(figsize = (20,5))
     axes.set_title(title)
-    df1.trendline.plot(ax = axes, kind='scatter',x='dt',y=field1,color='red')
-    df2.trendline.plot(ax = axes, kind='scatter',x='Aux_date',y=field2,color='blue')
+    data1.plot()
+    data2.plot()
+    #df1.trendline.plot(ax = axes, kind='scatter',x='dt',y=field1,color='red')
+    #df2.trendline.plot(ax = axes, kind='scatter',x='Aux_date',y=field2,color='blue')
     plt.show()
     st.pyplot(fig)
 
