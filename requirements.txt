@@ -9,6 +9,7 @@ localtileserver
 nbserverproxy
 owslib
 palettable
+earthengine-api
 plotly
 streamlit==1.12.2
 streamlit-bokeh-events
