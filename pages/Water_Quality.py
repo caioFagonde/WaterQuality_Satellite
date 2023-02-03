@@ -113,6 +113,9 @@ def generate_tif(depth = 4, filename = "",img = ""):
         band_red = src.read(6) * 0.0001
     
     with rasterio.open(filename) as src:
+        band_rededge = src.read(7) * 0.0001
+    
+    with rasterio.open(filename) as src:
         band_nir = src.read(8) * 0.0001
     
     with rasterio.open(filename) as src:
@@ -163,7 +166,9 @@ def generate_tif(depth = 4, filename = "",img = ""):
     lrrs_vecblue = np.log(rrs_vecblue)
     lrrs_vecgreen = np.log(rrs_vecgreen)
     
-    chla = 0.5#np.power(10,-0.4909 + 191.659*w)#0.5
+    ndci = (band_red - band_rededge)/(band_red + band_rededge)
+    chla = np.multiply((14.039 + (86.115 * ndci) + 194.325),np.power(ndci,2)) * 0.001
+    #chla = 0.5#np.power(10,-0.4909 + 191.659*w)#0.5
     m0 = 52.073*np.exp(0.957*chla)
     m1 = 50.156*np.exp(0.957*chla)
     
@@ -177,7 +182,7 @@ def generate_tif(depth = 4, filename = "",img = ""):
     a0 = -3.24
     a1 = 14.72
     a2 = -18.48
-    bathymetry = 0.5*m0 * np.divide(lrrs_vecblue,lrrs_vecgreen) - m1#a0 + a1*np.log(band_blue) + a2*np.log(band_green)
+    bathymetry = m0 * np.divide(lrrs_vecblue,lrrs_vecgreen) - m1#a0 + a1*np.log(band_blue) + a2*np.log(band_green)
     #bathymetry = bathymetry/np.nanmax(bathymetry)
     # NDWI for masking
     ndwi = (band_green.astype(float) - band_nir.astype(float))/(band_green.astype(float) + band_nir.astype(float))
