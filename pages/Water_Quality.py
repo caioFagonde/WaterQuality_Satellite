@@ -151,8 +151,8 @@ def generate_tif(depth = 4, filename = "",img = ""):
     band_red_Rrs = surface_to_remote_reflectance(band_red,zenith_angle)
     band_nir_Rrs = surface_to_remote_reflectance(band_nir,zenith_angle)
     
-    big_rrs_blue = band_blue_Rrs/31415.926
-    big_rrs_green = band_green_Rrs/31415.926
+    big_rrs_blue = 1000*band_blue_Rrs/31415.926
+    big_rrs_green = 1000*band_green_Rrs/31415.926
     
     rrs_vecblue = 1000*np.divide(big_rrs_blue,(1.7*big_rrs_blue)) + 0.52
     rrs_vecgreen = 1000*np.divide(big_rrs_green,(1.7*big_rrs_green)) + 0.52
@@ -180,7 +180,7 @@ def generate_tif(depth = 4, filename = "",img = ""):
     ndwi = (band_green.astype(float) - band_nir.astype(float))/(band_green.astype(float) + band_nir.astype(float))
     dissolved_oxygen[ndwi < -0.4] = np.nan
     bathymetry[ndwi < -0.4] = np.nan
-    #bathymetry[bathymetry < 0] = 0
+    bathymetry[bathymetry < 0] = 0
     #bathymetry[bathymetry > 20] = np.nan
     # check range values, excluding NaN
     #np.nanmin(dissolved_oxygen), np.nanmax(dissolved_oxygen)
