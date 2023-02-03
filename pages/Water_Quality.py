@@ -154,8 +154,8 @@ def generate_tif(depth = 4, filename = "",img = ""):
     big_rrs_blue = band_blue/3.1415926
     big_rrs_green = band_green/3.1415926
     
-    rrs_vecblue = 1000*np.divide(big_rrs_blue,(1.7*big_rrs_blue  + 0.52))
-    rrs_vecgreen = 1000*np.divide(big_rrs_green,(1.7*big_rrs_green  + 0.52))
+    rrs_vecblue = 1000*np.divide(big_rrs_blue,(1.7*big_rrs_blue))  + 0.52
+    rrs_vecgreen = 1000*np.divide(big_rrs_green,(1.7*big_rrs_green))  + 0.52
     
     lrrs_vecblue = np.log(rrs_vecblue)
     lrrs_vecgreen = np.log(rrs_vecgreen)
@@ -175,7 +175,7 @@ def generate_tif(depth = 4, filename = "",img = ""):
     a1 = 14.72
     a2 = -18.48
     bathymetry = m0 * np.divide(lrrs_vecblue,lrrs_vecgreen) - m1#a0 + a1*np.log(band_blue) + a2*np.log(band_green)
-    bathymetry = bathymetry/np.nanmax(bathymetry)
+    #bathymetry = bathymetry/np.nanmax(bathymetry)
     # NDWI for masking
     ndwi = (band_green.astype(float) - band_nir.astype(float))/(band_green.astype(float) + band_nir.astype(float))
     dissolved_oxygen[ndwi < -0.4] = np.nan
