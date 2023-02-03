@@ -152,7 +152,7 @@ def generate_tif(depth = 4, filename = "",img = ""):
     band_nir_Rrs = surface_to_remote_reflectance(band_nir,zenith_angle)
     
     big_rrs_blue = band_blue/3.1415926
-    big_rrs_green = *band_green/3.1415926
+    big_rrs_green = band_green/3.1415926
     
     rrs_vecblue = 1000*np.divide(big_rrs_blue,(1.7*big_rrs_blue  + 0.52))
     rrs_vecgreen = 1000*np.divide(big_rrs_green,(1.7*big_rrs_green  + 0.52))
