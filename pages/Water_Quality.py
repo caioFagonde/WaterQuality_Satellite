@@ -163,7 +163,7 @@ def generate_tif(depth = 4, filename = "",img = ""):
     lrrs_vecblue = np.log(rrs_vecblue)
     lrrs_vecgreen = np.log(rrs_vecgreen)
     
-    chla = np.power(10,-0.4909 + 191.659*w)#0.5
+    chla = 0.5#np.power(10,-0.4909 + 191.659*w)#0.5
     m0 = 52.073*np.exp(0.957*chla)
     m1 = 50.156*np.exp(0.957*chla)
     
@@ -273,7 +273,7 @@ def generate_tif(depth = 4, filename = "",img = ""):
     fig.savefig("do_legends.png", dpi=400, bbox_inches='tight', pad_inches=0.3)
     st.pyplot(fig)
     
-    min= 5 #np.nanmin(bathymetry)
+    min= 5.5 #np.nanmin(bathymetry)
     max= 6 #np.nanmax(bathymetry)
     mid= (min + max)/2
     
