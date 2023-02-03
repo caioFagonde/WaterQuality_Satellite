@@ -164,7 +164,7 @@ def generate_tif(depth = 4, filename = "",img = ""):
     lrrs_vecgreen = np.log(rrs_vecgreen)
     
     chla = 0.5#np.power(10,-0.4909 + 191.659*w)#0.5
-    m0 = 53.073*np.exp(0.957*chla)
+    m0 = 52.073*np.exp(0.957*chla)
     m1 = 50.156*np.exp(0.957*chla)
     
     # Calculate Dissolved Oxygen from regression equation
@@ -177,7 +177,7 @@ def generate_tif(depth = 4, filename = "",img = ""):
     a0 = -3.24
     a1 = 14.72
     a2 = -18.48
-    bathymetry = m0 * np.divide(lrrs_vecblue,lrrs_vecgreen) - m1#a0 + a1*np.log(band_blue) + a2*np.log(band_green)
+    bathymetry = 2*m0 * np.divide(lrrs_vecblue,lrrs_vecgreen) - m1#a0 + a1*np.log(band_blue) + a2*np.log(band_green)
     #bathymetry = bathymetry/np.nanmax(bathymetry)
     # NDWI for masking
     ndwi = (band_green.astype(float) - band_nir.astype(float))/(band_green.astype(float) + band_nir.astype(float))
