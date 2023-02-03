@@ -164,7 +164,7 @@ def generate_tif(depth = 4, filename = "",img = ""):
     lrrs_vecgreen = np.log(rrs_vecgreen)
     
     chla = 0.5#np.power(10,-0.4909 + 191.659*w)#0.5
-    m0 = 52.073*np.exp(0.957*chla)
+    m0 = 53.073*np.exp(0.957*chla)
     m1 = 50.156*np.exp(0.957*chla)
     
     # Calculate Dissolved Oxygen from regression equation
