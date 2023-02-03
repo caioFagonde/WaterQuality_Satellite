@@ -163,7 +163,7 @@ def generate_tif(depth = 4, filename = "",img = ""):
     lrrs_vecblue = np.log(rrs_vecblue)
     lrrs_vecgreen = np.log(rrs_vecgreen)
     
-    chla = 0.5#np.power(10,-0.4909 + 191.659*w)#0.5
+    chla = np.power(10,-0.4909 + 191.659*w)#0.5
     m0 = 52.073*np.exp(0.957*chla)
     m1 = 50.156*np.exp(0.957*chla)
     
@@ -274,8 +274,8 @@ def generate_tif(depth = 4, filename = "",img = ""):
     st.pyplot(fig)
     
     min= 0#np.nanmin(bathymetry)
-    max= 4#np.nanmax(bathymetry)
-    mid= (min + max)/2
+    max= np.nanmax(bathymetry)
+    mid= 2
     
     fig = plt.figure(figsize=(20,10))
     ax = fig.add_subplot(111)
