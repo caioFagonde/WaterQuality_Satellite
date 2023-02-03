@@ -144,7 +144,7 @@ def generate_tif(depth = 4, filename = "",img = ""):
     latitude = np.deg2rad(B.lat)
     longitude = np.deg2rad(B.lon)
     solar_hour_angle = np.deg2rad(solar_hour_angle)
-    zenith_angle = np.acos(np.sin(latitude) * np.sin(declination) + np.cos(latitude) * np.cos(declination) * np.cos(solar_hour_angle))
+    zenith_angle = np.arccos(np.sin(latitude) * np.sin(declination) + np.cos(latitude) * np.cos(declination) * np.cos(solar_hour_angle))
     
     band_blue_Rrs = surface_to_remote_reflectance(band_blue,zenith_angle)
     band_green_Rrs = surface_to_remote_reflectance(band_green,zenith_angle)
