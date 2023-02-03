@@ -396,6 +396,7 @@ def generate_tif(depth = 4, filename = "",img = ""):
         control = True
        ).add_to(m)
     folium.LayerControl().add_to(m)
+    folium.features.ClickForMarker("<b>Lat:</b> ${lat}<br /><b>Lon:</b> ${lng}").add_to(m)
     # Display map 
     folium_static(m, width=1200, height=450)
     
