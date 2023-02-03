@@ -304,7 +304,7 @@ def generate_tif(depth = 4, filename = "",img = ""):
     # diverging color scheme chosen from https://matplotlib.org/users/colormaps.html
     cmap = plt.cm.RdYlGn 
     
-    cax = ax.imshow(dissolved_oxygen, cmap=cmap, clim=(min, max), norm=MidpointNormalize(midpoint=mid,vmin=min, vmax=max))
+    cax = ax.imshow(bathymetry, cmap=cmap, clim=(min, max), norm=MidpointNormalize(midpoint=mid,vmin=min, vmax=max))
     
     ax.axis('off')
     title = "Profundidade máxima (m)"
