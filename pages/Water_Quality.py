@@ -239,7 +239,7 @@ def generate_tif(depth = 4, filename = "",img = ""):
     ax = fig.add_subplot(111)
     
     # diverging color scheme chosen from https://matplotlib.org/users/colormaps.html
-    cmap = plt.cm.RdYlGn 
+    cmap = 'Set1'#plt.cm.RdYlGn 
     
     cax = ax.imshow(dissolved_oxygen, cmap=cmap, clim=(min, max), norm=MidpointNormalize(midpoint=mid,vmin=min, vmax=max))
     
@@ -260,7 +260,7 @@ def generate_tif(depth = 4, filename = "",img = ""):
     ax = fig.add_subplot(111)
     
     # diverging color scheme chosen from https://matplotlib.org/users/colormaps.html
-    cmap = plt.cm.RdYlGn 
+    cmap = 'Set1'# plt.cm.RdYlGn 
     
     cax = ax.imshow(dissolved_oxygen, cmap=cmap, clim=(min, max), norm=MidpointNormalize(midpoint=mid,vmin=min, vmax=max))
     
