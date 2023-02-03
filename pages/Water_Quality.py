@@ -123,8 +123,8 @@ def generate_tif(depth = 4, filename = ""):
     np.seterr(divide='ignore', invalid='ignore')
     
     # Calculate Dissolved Oxygen from regression equation
-    secc = regr_secc.intercept_[0] + coefficients_secc.iat[0,1] *band_blue.astype(float) + coefficients_secc.iat[1,1]*band_green.astype(float) + coefficients_secc.iat[2,1]*band_red.astype(float) + coefficients_secc.iat[3,1]*band_nir.astype(float)
-    dissolved_oxygen = regr.intercept_[0] + coefficients.iat[0,1]*depth + coefficients.iat[1,1] *band_blue.astype(float) + coefficients.iat[2,1]*band_green.astype(float) + coefficients.iat[3,1]*band_red.astype(float) + coefficients.iat[4,1]*band_nir.astype(float) + coefficients.iat[5,1]*secc.astype(float)
+    secc = regr_secc.intercept_[0] + coefficients_secc[0,1] *band_blue.astype(float) + coefficients_secc[1,1]*band_green.astype(float) + coefficients_secc[2,1]*band_red.astype(float) + coefficients_secc[3,1]*band_nir.astype(float)
+    dissolved_oxygen = regr.intercept_[0] + coefficients[0,1]*depth + coefficients[1,1] *band_blue.astype(float) + coefficients[2,1]*band_green.astype(float) + coefficients[3,1]*band_red.astype(float) + coefficients[4,1]*band_nir.astype(float) + coefficients[5,1]*secc.astype(float)
     dissolved_oxygen[dissolved_oxygen < 0] = 0
     dissolved_oxygen[dissolved_oxygen > 20] = 20
     
