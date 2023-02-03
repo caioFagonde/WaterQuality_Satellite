@@ -166,9 +166,9 @@ def generate_tif(depth = 4, filename = "",img = ""):
     lrrs_vecblue = np.log(rrs_vecblue)
     lrrs_vecgreen = np.log(rrs_vecgreen)
     
-    ndci = np.divide((band_red - band_rededge),(band_red + band_rededge))
-    chla = np.multiply((14.039 + (86.115 * ndci) + 194.325),np.power(ndci,2)) * 0.001
-    #chla = 0.5#np.power(10,-0.4909 + 191.659*w)#0.5
+    #ndci = np.divide((band_red - band_rededge),(band_red + band_rededge))
+    #chla = np.multiply((14.039 + (86.115 * ndci) + 194.325),np.power(ndci,2)) * 0.001
+    chla = 0.5#np.power(10,-0.4909 + 191.659*w)#0.5
     m0 = 52.073*np.exp(0.957*chla)
     m1 = 50.156*np.exp(0.957*chla)
     
