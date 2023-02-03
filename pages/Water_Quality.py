@@ -274,7 +274,7 @@ def generate_tif(depth = 4, filename = "",img = ""):
     st.pyplot(fig)
     
     min= 0#np.nanmin(bathymetry)
-    max= 3#np.nanmax(bathymetry)
+    max= 1#np.nanmax(bathymetry)
     mid= (min + max)/2
     
     fig = plt.figure(figsize=(20,10))
