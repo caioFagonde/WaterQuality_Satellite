@@ -97,10 +97,12 @@ coefficients = np.transpose(regr.coef_) #coefficients = pandas.concat([pandas.Da
 coefficients_secc = np.transpose(regr_secc.coef_)
 #@st.cache(allow_output_mutation=True)
 
-def generate_tif(depth = 4, filename = ""):
+def generate_tif(depth = 4, filename = "",img = ""):
     
     if filename == "":
         filename = mypath + onlyfiles[1]
+    if img == "":
+        img= onlyfiles[1]
     # List of filenames for tifs
     
     
@@ -123,7 +125,7 @@ def generate_tif(depth = 4, filename = ""):
     np.seterr(divide='ignore', invalid='ignore')
     
     ## Some functions to obtain remote sensing reflectance
-    strAux = filename.split('/')[0]
+    strAux = img.split('/')[0]
     year = strAux[0:4]
     mon = strAux[4:6]
     day = strAux[6:8]
@@ -397,6 +399,6 @@ image = option = st.selectbox(
     'Escolha a imagem',
     [onlyfiles[1],onlyfiles[len(onlyfiles)-1]])
 image_path = os.path.join(mypath, image)
-generate_tif(depth,image_path)
+generate_tif(depth,image_path,image)
 
 
