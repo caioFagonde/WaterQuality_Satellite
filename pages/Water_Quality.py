@@ -175,6 +175,7 @@ def generate_tif(depth = 4, filename = "",img = ""):
     a1 = 14.72
     a2 = -18.48
     bathymetry = m0 * np.divide(lrrs_vecblue,lrrs_vecgreen) - m1#a0 + a1*np.log(band_blue) + a2*np.log(band_green)
+    bathymetry = bathymetry/np.nanmax(bathymetry)
     # NDWI for masking
     ndwi = (band_green.astype(float) - band_nir.astype(float))/(band_green.astype(float) + band_nir.astype(float))
     dissolved_oxygen[ndwi < -0.4] = np.nan
@@ -270,7 +271,7 @@ def generate_tif(depth = 4, filename = "",img = ""):
     st.pyplot(fig)
     
     min= 0 #np.nanmin(bathymetry)
-    max= 10 #np.nanmax(bathymetry)
+    max= 1 #np.nanmax(bathymetry)
     mid= (min + max)/2
     
     fig = plt.figure(figsize=(20,10))
