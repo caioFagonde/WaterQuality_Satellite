@@ -83,7 +83,7 @@ Z.do = [5.9,6.7]
 Z.dep = [4, 4.8]
 Z.name = "Zippy"
 
-Points = [B,Six6,P,Z]
+points = [B,Six6,P,Z]
 
 absolute_path = os.getcwd()
 relative_path = "PuroPeixe/files/"
@@ -123,8 +123,8 @@ def generate_tif(depth = 4, filename = ""):
     np.seterr(divide='ignore', invalid='ignore')
     
     # Calculate Dissolved Oxygen from regression equation
-    secc = regr_secc.intercept_[0] + coefficients_secc[0,1] *band_blue.astype(float) + coefficients_secc[1,1]*band_green.astype(float) + coefficients_secc[2,1]*band_red.astype(float) + coefficients_secc[3,1]*band_nir.astype(float)
-    dissolved_oxygen = regr.intercept_[0] + coefficients[0,1]*depth + coefficients[1,1] *band_blue.astype(float) + coefficients[2,1]*band_green.astype(float) + coefficients[3,1]*band_red.astype(float) + coefficients[4,1]*band_nir.astype(float) + coefficients[5,1]*secc.astype(float)
+    secc = regr_secc.intercept_[0] + coefficients_secc[0] *band_blue.astype(float) + coefficients_secc[1]*band_green.astype(float) + coefficients_secc[2]*band_red.astype(float) + coefficients_secc[3]*band_nir.astype(float)
+    dissolved_oxygen = regr.intercept_[0] + coefficients[0]*depth + coefficients[1] *band_blue.astype(float) + coefficients[2]*band_green.astype(float) + coefficients[3]*band_red.astype(float) + coefficients[4]*band_nir.astype(float) + coefficients[5]*secc.astype(float)
     dissolved_oxygen[dissolved_oxygen < 0] = 0
     dissolved_oxygen[dissolved_oxygen > 20] = 20
     
@@ -312,21 +312,7 @@ def generate_tif(depth = 4, filename = ""):
 
         # get value from grid
         value = list(src.sample([(xx, yy)]))[0]
-        index = len(df) - 1
-        if k == 0:
-            do_last = df.loc[index,'B_avg']
-            depth_last = df.loc[index,'Profundidade de Secchi (m)']
-        elif k == 1:
-            do_last = df.loc[index,'S_avg']
-            depth_last = df.loc[index,'METROS.1']
-        elif k == 2:
-            do_last = df.loc[index,'P_avg']
-            depth_last =df.loc[index,'METROS']
-        elif k == 3:
-            do_last = df.loc[index,'Z_avg']
-            depth_last = df.loc[index,'METROS.2']
-        do_last = value
-        info = points[k].name + " Oxigênio dissolvido: " + str(do_last) + " mg/L" 
+        info = points[k].name + " Oxigênio dissolvido: " + str(value) + " mg/L" 
 
 
 
