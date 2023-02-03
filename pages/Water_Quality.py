@@ -163,7 +163,7 @@ def generate_tif(depth = 4, filename = "",img = ""):
     lrrs_vecblue = np.log(rrs_vecblue)
     lrrs_vecgreen = np.log(rrs_vecgreen)
     
-    chla = np.power(10,-0.4909 + 191.659*w)#0.5
+    chla = 0.5#np.power(10,-0.4909 + 191.659*w)#0.5
     m0 = 52.073*np.exp(0.957*chla)
     m1 = 50.156*np.exp(0.957*chla)
     
@@ -239,7 +239,7 @@ def generate_tif(depth = 4, filename = "",img = ""):
     ax = fig.add_subplot(111)
     
     # diverging color scheme chosen from https://matplotlib.org/users/colormaps.html
-    cmap = 'Set1'# plt.cm.RdYlGn 
+    cmap = plt.cm.RdYlGn 
     
     cax = ax.imshow(dissolved_oxygen, cmap=cmap, clim=(min, max), norm=MidpointNormalize(midpoint=mid,vmin=min, vmax=max))
     
