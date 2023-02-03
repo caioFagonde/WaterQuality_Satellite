@@ -153,6 +153,9 @@ def generate_tif(depth = 4, filename = "",img = ""):
     
     big_rrs_blue = band_blue/3.1415926
     big_rrs_green = band_green/3.1415926
+    big_rrs_red = band_red/3.1415926
+    
+    w = big_rrs_green - 0.46*big_rrs_red - 0.54*big_rrs_blue
     
     rrs_vecblue = 1000*np.divide(big_rrs_blue,(1.7*big_rrs_blue  + 0.52))
     rrs_vecgreen = 1000*np.divide(big_rrs_green,(1.7*big_rrs_green  + 0.52))
@@ -160,7 +163,7 @@ def generate_tif(depth = 4, filename = "",img = ""):
     lrrs_vecblue = np.log(rrs_vecblue)
     lrrs_vecgreen = np.log(rrs_vecgreen)
     
-    chla = 0.5
+    chla = np.pow(10,-0.4909 + 191.659*w)#0.5
     m0 = 52.073*np.exp(0.957*chla)
     m1 = 50.156*np.exp(0.957*chla)
     
