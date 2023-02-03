@@ -184,7 +184,7 @@ def generate_tif(depth = 4, filename = "",img = ""):
     dissolved_oxygen[ndwi < -0.4] = np.nan
     bathymetry[ndwi < -0.4] = np.nan
     bathymetry[bathymetry < 0] = 0
-    #bathymetry[bathymetry > 20] = np.nan
+    bathymetry[bathymetry > 20] = 0
     # check range values, excluding NaN
     #np.nanmin(dissolved_oxygen), np.nanmax(dissolved_oxygen)
     #np.nanmin(dissolved_oxygen), np.nanmax(dissolved_oxygen)
@@ -274,7 +274,7 @@ def generate_tif(depth = 4, filename = "",img = ""):
     st.pyplot(fig)
     
     min= 0#np.nanmin(bathymetry)
-    max= 7#np.nanmax(bathymetry)
+    max= np.nanmax(bathymetry)
     mid= (min + max)/2
     
     fig = plt.figure(figsize=(20,10))
