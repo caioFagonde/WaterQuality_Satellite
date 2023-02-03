@@ -99,7 +99,7 @@ coefficients_secc = np.transpose(regr_secc.coef_)
 #@st.cache(allow_output_mutation=True)
 
 def generate_tif(depth = 4, filename = "",img = ""):
-    
+    st.write("Current RMSE = 0.634 mg/L")
     if filename == "":
         filename = mypath + onlyfiles[1]
     if img == "":
