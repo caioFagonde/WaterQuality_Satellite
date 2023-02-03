@@ -273,8 +273,8 @@ def generate_tif(depth = 4, filename = "",img = ""):
     fig.savefig("do_legends.png", dpi=400, bbox_inches='tight', pad_inches=0.3)
     st.pyplot(fig)
     
-    min= np.nanmin(bathymetry)
-    max= np.nanmax(bathymetry)
+    min= 0#np.nanmin(bathymetry)
+    max= 7#np.nanmax(bathymetry)
     mid= (min + max)/2
     
     fig = plt.figure(figsize=(20,10))
@@ -283,7 +283,7 @@ def generate_tif(depth = 4, filename = "",img = ""):
     # diverging color scheme chosen from https://matplotlib.org/users/colormaps.html
     cmap = plt.cm.RdYlGn # plt.cm.RdYlGn 
     
-    cax = ax.imshow(dissolved_oxygen, cmap=cmap, clim=(min, max), norm=MidpointNormalize(midpoint=mid,vmin=min, vmax=max))
+    cax = ax.imshow(bathymetry, cmap=cmap, clim=(min, max), norm=MidpointNormalize(midpoint=mid,vmin=min, vmax=max))
     
     ax.axis('off')
     title = "Profundidade máxima (m)"
