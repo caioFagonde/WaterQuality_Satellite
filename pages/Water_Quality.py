@@ -53,6 +53,7 @@ class Ponto(object):
         self.do = []
         self.dep = []
 
+
 # Collection points
 B = Ponto()
 Six6 = Ponto()
@@ -186,8 +187,8 @@ def generate_tif(depth = 4, filename = "",img = ""):
     #bathymetry = bathymetry/np.nanmax(bathymetry)
     # NDWI for masking
     ndwi = (band_green.astype(float) - band_nir.astype(float))/(band_green.astype(float) + band_nir.astype(float))
-    dissolved_oxygen[ndwi < -0.4] = np.nan
-    bathymetry[ndwi < -0.4] = np.nan
+    dissolved_oxygen[ndwi < 0.061] = np.nan
+    bathymetry[ndwi < 0.061] = np.nan
     bathymetry[bathymetry < 0] = 0
     bathymetry[bathymetry > 20] = 0
     # check range values, excluding NaN
