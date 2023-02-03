@@ -135,6 +135,30 @@ def generate_tif(depth = 4, filename = "",img = ""):
     fDate = datetime.datetime.strptime(fDate, '%d/%m/%Y %H:%M')
     doy = fDate.timetuple().tm_yday
     
+    def surface_to_remote_reflectance(surface_reflectance, solar_zenith_angle):
+        remote_sensing_reflectance = surface_reflectance / np.cos(solar_zenith_angle)
+        return remote_sensing_reflectance
+    
+    declination = 23.45 * np.sin(np.deg2rad(360 * (284 + doy) / 365))
+    solar_hour_angle = 15 * (float(H) - 12)
+    latitude = np.deg2rad(B.lat)
+    longitude = np.deg2rad(B.lon)
+    solar_hour_angle = np.deg2rad(solar_hour_angle)
+    zenith_angle = np.arccos(np.sin(latitude) * np.sin(declination) + np.cos(latitude) * np.cos(declination) * np.cos(solar_hour_angle))
+    
+    band_blue_Rrs = surface_to_remote_reflectance(band_blue,zenith_angle)
+    band_green_Rrs = surface_to_remote_reflectance(band_green,zenith_angle)
+    band_red_Rrs = surface_to_remote_reflectance(band_red,zenith_angle)
+    band_nir_Rrs = surface_to_remote_reflectance(band_nir,zenith_angle)
+    
+    big_rrs_blue = band_blue_Rrs/31415.926
+    big_rrs_green = band_green_Rrs/31415.926
+    
+    rrs_vecblue = 1000*np.divide(big_rrs_blue,(1.7*big_rrs_blue)) + 0.52
+    rrs_vecgreen = 1000*np.divide(big_rrs_green,(1.7*big_rrs_green)) + 0.52
+    
+    lrrs_vecblue = np.log(rrs_vecblue)
+    lrrs_vecgreen = np.log(rrs_vecgreen)
     
     chla = 0.5
     m0 = 52.073*np.exp(0.957*chla)
@@ -150,7 +174,7 @@ def generate_tif(depth = 4, filename = "",img = ""):
     a0 = -3.24
     a1 = 14.72
     a2 = -18.48
-    bathymetry = m0 * np.divide(np.log(band_blue),np.log(band_green)) + m1#a0 + a1*np.log(band_blue) + a2*np.log(band_green)
+    bathymetry = m0 * np.divide(lrrs_vecblue,lrrs_vecgreen) + m1#a0 + a1*np.log(band_blue) + a2*np.log(band_green)
     
     # NDWI for masking
     ndwi = (band_green.astype(float) - band_nir.astype(float))/(band_green.astype(float) + band_nir.astype(float))
